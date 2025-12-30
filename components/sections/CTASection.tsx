@@ -23,6 +23,7 @@ export default function CTASection() {
     defaultValues: {
       name: "",
       profession: undefined,
+      email: "",
       advisorsCount: "",
       clientsCount: "",
       painPoint: "",
@@ -145,6 +146,20 @@ export default function CTASection() {
                               <SelectItem value="Autre">Autre</SelectItem>
                             </SelectContent>
                           </Select>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
+                    <FormField
+                      control={form.control}
+                      name="email"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Email</FormLabel>
+                          <FormControl>
+                            <Input type="email" placeholder="jean.dupont@email.com" {...field} className="bg-background/50 border-white/10" />
+                          </FormControl>
                           <FormMessage />
                         </FormItem>
                       )}
