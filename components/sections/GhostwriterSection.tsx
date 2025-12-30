@@ -1,6 +1,6 @@
 "use client"
 
-import { useRef, useState, useEffect } from "react"
+import { useRef, useState, useEffect, useMemo } from "react"
 import { motion, useScroll, useTransform } from "framer-motion"
 
 const MotionDiv = motion.div as any
@@ -14,6 +14,59 @@ export default function GhostwriterSection() {
   })
 
   const waveProgress = useTransform(scrollYProgress, [0, 0.5], [0, 1])
+  const waveMotion = useTransform(scrollYProgress, [0, 1], [0, 2 * Math.PI])
+
+  const waveforms = useMemo(() => {
+    const generateBars = (seed: number) => {
+      let d = "";
+      const totalBars = 60;
+      const width = 200;
+      
+      for (let i = 0; i <= totalBars; i++) {
+        const x = (i / totalBars) * width;
+        const time = i * 0.15;
+        const envelope = Math.abs(Math.sin(time + seed) * Math.cos(time * 0.5 + seed * 2));
+        const texture = Math.sin(i * 1.5) * 0.3 + 1;
+        
+        let h = envelope * texture * 40; 
+        
+        if (i % 7 === 0 || i % 13 === 0) h *= 1.2;
+        
+        h = Math.max(2, Math.min(45, h));
+        
+        d += `M ${x.toFixed(1)} ${50 - h} L ${x.toFixed(1)} ${50 + h} `;
+      }
+      return d;
+    };
+
+    return {
+      main: generateBars(0),
+      secondary: generateBars(42)
+    };
+  }, []);
+
+  const animatedMainPath = useTransform(waveMotion, (motion) => {
+    const timeOffset = motion * 0.5;
+    let d = "";
+    const totalBars = 60;
+    const width = 200;
+    
+    for (let i = 0; i <= totalBars; i++) {
+      const x = (i / totalBars) * width;
+      const time = i * 0.15 + timeOffset;
+      const envelope = Math.abs(Math.sin(time) * Math.cos(time * 0.5));
+      const texture = Math.sin(i * 1.5) * 0.3 + 1;
+      
+      let h = envelope * texture * 40; 
+      
+      if (i % 7 === 0 || i % 13 === 0) h *= 1.2;
+      
+      h = Math.max(2, Math.min(45, h));
+      
+      d += `M ${x.toFixed(1)} ${50 - h} L ${x.toFixed(1)} ${50 + h} `;
+    }
+    return d;
+  });
 
   const [currentFieldValues, setCurrentFieldValues] = useState<Record<string, string>>({})
 
@@ -79,48 +132,37 @@ export default function GhostwriterSection() {
     <section ref={containerRef} className="relative min-h-screen flex items-center bg-background py-20 overflow-hidden">
       <div className="container px-4 md:px-6 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
 
-        <div className="order-2 md:order-1 relative h-[300px] md:h-[500px] flex items-center justify-center">
+        <div className="order-1 md:order-1 relative h-[300px] md:h-[500px] flex items-center justify-center">
           <svg viewBox="0 0 200 100" className="w-full h-full text-primary overflow-visible">
             <MotionPath
-              d="M0,50 Q50,0 100,50 T200,50"
+              d={waveforms.secondary}
               fill="none"
               stroke="currentColor"
-              strokeWidth="1"
+              strokeWidth="3"
+              strokeLinecap="round"
               initial={{ pathLength: 0, opacity: 0 }}
+              whileInView={{ pathLength: 1, opacity: 0.2 }}
               style={{ pathLength: waveProgress, opacity: waveProgress }}
-              className="opacity-50"
+              className="opacity-20 blur-[1px]"
+              transition={{ duration: 1.5, ease: "easeInOut" }}
             />
             <MotionPath
-              d="M0,50 Q50,20 100,50 T200,50"
+              d={animatedMainPath}
               fill="none"
               stroke="currentColor"
               strokeWidth="2"
+              strokeLinecap="round"
               initial={{ pathLength: 0, opacity: 0 }}
+              whileInView={{ pathLength: 1, opacity: 1 }}
               style={{ pathLength: waveProgress, opacity: waveProgress }}
-            />
-            <MotionPath
-              d="M0,50 Q50,80 100,50 T200,50"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1"
-              initial={{ pathLength: 0, opacity: 0 }}
-              style={{ pathLength: waveProgress, opacity: waveProgress }}
-              className="opacity-50"
-            />
-            <MotionPath
-              d="M0,50 Q50,100 100,50 T200,50"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1"
-              initial={{ pathLength: 0, opacity: 0 }}
-              style={{ pathLength: waveProgress, opacity: waveProgress }}
-              className="opacity-30"
+              className="opacity-90"
+              transition={{ duration: 1.5, ease: "easeInOut" }}
             />
           </svg>
           <div className="absolute inset-0 bg-gradient-to-r from-background via-transparent to-background" />
         </div>
 
-        <div className="order-1 md:order-2 space-y-8 z-10">
+        <div className="order-2 md:order-2 space-y-8 z-10">
           <MotionDiv
             initial={{ opacity: 0, x: 50 }}
             whileInView={{ opacity: 1, x: 0 }}

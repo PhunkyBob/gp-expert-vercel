@@ -22,6 +22,14 @@ export default function KYCSection() {
   const cardOpacity = useTransform(scrollYProgress, [0, 0.3], [0, 1])
 
   const [visibleSteps, setVisibleSteps] = useState<Set<number>>(new Set())
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768)
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
 
   useEffect(() => {
     const unsubscribe = scrollYProgress.on("change", (value) => {
@@ -54,15 +62,15 @@ export default function KYCSection() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="max-w-3xl mx-auto text-center mb-16"
+          className="max-w-3xl mx-auto text-center mb-8"
         >
           <h2 className="text-3xl md:text-5xl font-bold mb-6">KYC évolutif et digital</h2>
           <p className="text-xl text-slate-400">Parcours d'entrée en relation sans couture avec vérification d'identité</p>
         </MotionDiv>
 
         <div className="max-w-5xl mx-auto">
-          <div className="relative">
-            <svg viewBox="0 0 100 40" className="w-full h-[500px] md:h-[400px]">
+          <div className="relative mb-8">
+            <svg viewBox="0 0 100 20" preserveAspectRatio="xMidYMin meet" className="w-full h-[150px] md:h-[150px]">
               <defs>
                 <linearGradient id="pathGradient" x1="0" y1="0" x2="1" y2="0">
                   <stop offset="0%" stopColor="#3b82f6" />
@@ -106,7 +114,14 @@ export default function KYCSection() {
               {steps.map((step, i) => {
                 const progress = i / (steps.length - 1)
                 const x = 10 + progress * 80
-                const y = 8
+                const y = 10
+
+                const circleRadius = isMobile ? 9 : 5
+                const borderRadius = isMobile ? 6 : 3.5
+                const iconSize = isMobile ? 8 : 5
+                const iconOffset = iconSize / 2
+                const fontSize = isMobile ? "4" : "2.5"
+                const textY = isMobile ? y + 15 : y + 9
 
                 const iconPath = step.label === "Identité" ? "/icons/user-check.svg"
                   : step.label === "LCB-FT" ? "/icons/shield-check.svg"
@@ -124,7 +139,7 @@ export default function KYCSection() {
                     <MotionCircle
                       cx={x}
                       cy={y}
-                      r="5"
+                      r={circleRadius}
                       fill={colors[step.color as keyof typeof colors].fill}
                       fillOpacity="0.2"
                       initial={false}
@@ -138,7 +153,7 @@ export default function KYCSection() {
                     <MotionCircle
                       cx={x}
                       cy={y}
-                      r="3.5"
+                      r={borderRadius}
                       fill="#1e293b"
                       stroke={colors[step.color as keyof typeof colors].stroke}
                       strokeWidth="0.7"
@@ -157,10 +172,10 @@ export default function KYCSection() {
                     >
                       <image
                         href={iconPath}
-                        x={x - 2.5}
-                        y={y - 2.5}
-                        width="5"
-                        height="5"
+                        x={x - iconOffset}
+                        y={y - iconOffset}
+                        width={iconSize}
+                        height={iconSize}
                       />
                     </MotionG>
 
@@ -171,11 +186,11 @@ export default function KYCSection() {
                     >
                       <text
                         x={x}
-                        y={y + 9}
+                        y={textY}
                         textAnchor="middle"
                         fill="white"
                         fontWeight="bold"
-                        fontSize="2.5"
+                        fontSize={fontSize}
                       >
                         {step.label}
                       </text>
@@ -185,28 +200,28 @@ export default function KYCSection() {
                 )
               })}
             </svg>
-
-            <MotionDiv
-              style={{ opacity: cardOpacity, y: cardY }}
-              className="absolute bottom-8 left-1/2 -translate-x-1/2 grid grid-cols-1 md:grid-cols-2 gap-4 w-full max-w-2xl px-4"
-            >
-              <div className="bg-card/80 backdrop-blur p-6 rounded-xl border border-white/10">
-                <div className="flex items-center gap-3 mb-3">
-                  <ShieldCheck className="w-5 h-5 text-green-500" />
-                  <h3 className="font-semibold">Lutte anti-blanchiment</h3>
-                </div>
-                <p className="text-sm text-slate-400">Vérification LCB-FT automatisée avec conformité réglementaire</p>
-              </div>
-
-              <div className="bg-card/80 backdrop-blur p-6 rounded-xl border border-white/10">
-                <div className="flex items-center gap-3 mb-3">
-                  <ClipboardCheck className="w-5 h-5 text-purple-500" />
-                  <h3 className="font-semibold">Profil investisseur</h3>
-                </div>
-                <p className="text-sm text-slate-400">Questionnaire MIF 2 / DDA interactif et personnalisé</p>
-              </div>
-            </MotionDiv>
           </div>
+
+          <MotionDiv
+            style={{ opacity: cardOpacity, y: cardY }}
+            className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-2xl mx-auto px-4"
+          >
+            <div className="bg-card/80 backdrop-blur p-6 rounded-xl border border-white/10">
+              <div className="flex items-center gap-3 mb-3">
+                <ShieldCheck className="w-5 h-5 text-green-500" />
+                <h3 className="font-semibold">Lutte anti-blanchiment</h3>
+              </div>
+              <p className="text-sm text-slate-400">Vérification LCB-FT automatisée avec conformité réglementaire</p>
+            </div>
+
+            <div className="bg-card/80 backdrop-blur p-6 rounded-xl border border-white/10">
+              <div className="flex items-center gap-3 mb-3">
+                <ClipboardCheck className="w-5 h-5 text-purple-500" />
+                <h3 className="font-semibold">Profil investisseur</h3>
+              </div>
+              <p className="text-sm text-slate-400">Questionnaire MIF 2 / DDA interactif et personnalisé</p>
+            </div>
+          </MotionDiv>
         </div>
       </div>
     </section>

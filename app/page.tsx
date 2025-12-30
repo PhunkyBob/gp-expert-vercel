@@ -1,6 +1,7 @@
 import HeroSection from "@/components/sections/HeroSection"
 import GhostwriterSection from "@/components/sections/GhostwriterSection"
 import VaultSection from "@/components/sections/VaultSection"
+import DocumentsSection from "@/components/sections/DocumentsSection"
 import EngineSection from "@/components/sections/EngineSection"
 import ArbitrageSection from "@/components/sections/ArbitrageSection"
 import RetirementSection from "@/components/sections/RetirementSection"
@@ -18,6 +19,7 @@ export default function Home() {
       <KYCSection />
       <GhostwriterSection />
       <VaultSection />
+      <DocumentsSection />
       <EngineSection />
       <ArbitrageSection />
       <RetirementSection />

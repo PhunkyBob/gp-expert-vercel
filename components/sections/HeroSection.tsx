@@ -3,7 +3,7 @@
 import { useRef } from "react"
 import { motion, useScroll, useTransform } from "framer-motion"
 import dynamic from "next/dynamic"
-import { Button } from "@/components/ui/button"
+
 
 const DataGlobe = dynamic(() => import("@/components/3d/DataGlobe"), {
   ssr: false,
@@ -67,13 +67,46 @@ export default function HeroSection() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
           >
-            <Button
-              onClick={scrollToCTA}
-              size="lg"
-              className="cursor-pointer bg-primary hover:bg-blue-700 text-white text-lg h-14 px-8 rounded-full shadow-[0_0_20px_rgba(59,130,246,0.5)] transition-all hover:shadow-[0_0_30px_rgba(59,130,246,0.7)] hover:scale-105"
+            <div
+              className="group flex flex-col items-center gap-4 cursor-pointer mt-8"
             >
-              Suivre le projet
-            </Button>
+              {/* Mouse Icon */}
+              <div className="relative">
+                <svg
+                  width="28"
+                  height="48"
+                  viewBox="0 0 28 48"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="stroke-slate-500 group-hover:stroke-blue-400 transition-colors duration-500"
+                >
+                  <rect x="1.5" y="1.5" width="25" height="45" rx="12.5" strokeWidth="2" />
+                  <motion.rect
+                    x="12"
+                    y="10"
+                    width="4"
+                    height="8"
+                    rx="2"
+                    className="fill-slate-500 group-hover:fill-blue-400 transition-colors duration-500"
+                    stroke="none"
+                    animate={{ y: [0, 12, 0] }}
+                    transition={{
+                      duration: 2,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                      times: [0, 0.5, 1]
+                    }}
+                  />
+                </svg>
+                {/* Ambient glow on hover */}
+                <div className="absolute inset-0 bg-blue-500/20 blur-[12px] rounded-full opacity-0 group-hover:opacity-100 transition-all duration-700" />
+              </div>
+
+              {/* Text */}
+              <span className="text-[11px] font-medium tracking-[0.2em] text-slate-500 uppercase group-hover:text-blue-300 transition-colors duration-500 select-none">
+                défilez pour découvrir
+              </span>
+            </div>
           </MotionDiv>
         </MotionDiv>
       </div>
