@@ -52,6 +52,7 @@ export default function Home() {
 
       <footer className="py-8 text-center text-sm text-slate-500 border-t border-white/5">
         <p>© 2026 Wealth IA. Tous droits réservés.</p>
+        <p>© 2026 Wealth IA. Tous droits réservés.</p>
       </footer>
     </main>
   )
