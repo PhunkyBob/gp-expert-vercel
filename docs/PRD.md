@@ -1,7 +1,7 @@
 # PRD : Landing Page - Next-Gen Wealth Advisory SaaS (Alpha)
 
 ## 1. Vision du Projet
-**Nom de code :** Wealth AI Co-pilot
+**Nom de code :** Wealth IA
 **Objectif :** Créer une vitrine technologique révolutionnaire pour convertir des experts (CGP, Experts-comptables, Avocats) en les inscrivant sur une liste d'attente prioritaire.
 **Promesse phare :** "Éliminez 90% de la saisie administrative. L'IA gère l'ingénierie, vous gérez l'humain."
 
