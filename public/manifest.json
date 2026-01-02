@@ -1,0 +1,17 @@
+{
+  "name": "Wealth IA",
+  "short_name": "Wealth IA",
+  "description": "L'Intelligence Artificielle au service de l'excellence patrimoniale",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#2563eb",
+  "orientation": "portrait-primary",
+  "icons": [],
+  "categories": [
+    "business",
+    "finance",
+    "productivity"
+  ],
+  "screenshots": []
+}

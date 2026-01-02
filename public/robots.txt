@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# Disallow API routes from crawling
+Disallow: /api/
+
+# Sitemap location
+Sitemap: https://www.wealthia.fr/sitemap.xml

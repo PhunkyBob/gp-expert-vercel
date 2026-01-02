@@ -5,6 +5,9 @@ export const waitlistSchema = z.object({
     message: "Le nom doit contenir au moins 2 caractères.",
   }),
   profession: z.enum(["CGP", "Expert-comptable", "Avocat", "Banquier", "Autre"]),
+  email: z.string().email({
+    message: "Adresse email invalide",
+  }),
   advisorsCount: z.string().min(1, {
     message: "Requis",
   }),
