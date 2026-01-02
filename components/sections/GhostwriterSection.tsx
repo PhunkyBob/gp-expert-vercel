@@ -16,24 +16,30 @@ export default function GhostwriterSection() {
   const waveProgress = useTransform(scrollYProgress, [0, 0.5], [0, 1])
   const waveMotion = useTransform(scrollYProgress, [0, 1], [0, 2 * Math.PI])
 
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
   const waveforms = useMemo(() => {
     const generateBars = (seed: number) => {
       let d = "";
       const totalBars = 60;
       const width = 200;
-      
+
       for (let i = 0; i <= totalBars; i++) {
         const x = (i / totalBars) * width;
         const time = i * 0.15;
         const envelope = Math.abs(Math.sin(time + seed) * Math.cos(time * 0.5 + seed * 2));
         const texture = Math.sin(i * 1.5) * 0.3 + 1;
-        
-        let h = envelope * texture * 40; 
-        
+
+        let h = envelope * texture * 40;
+
         if (i % 7 === 0 || i % 13 === 0) h *= 1.2;
-        
+
         h = Math.max(2, Math.min(45, h));
-        
+
         d += `M ${x.toFixed(1)} ${50 - h} L ${x.toFixed(1)} ${50 + h} `;
       }
       return d;
@@ -50,19 +56,19 @@ export default function GhostwriterSection() {
     let d = "";
     const totalBars = 60;
     const width = 200;
-    
+
     for (let i = 0; i <= totalBars; i++) {
       const x = (i / totalBars) * width;
       const time = i * 0.15 + timeOffset;
       const envelope = Math.abs(Math.sin(time) * Math.cos(time * 0.5));
       const texture = Math.sin(i * 1.5) * 0.3 + 1;
-      
-      let h = envelope * texture * 40; 
-      
+
+      let h = envelope * texture * 40;
+
       if (i % 7 === 0 || i % 13 === 0) h *= 1.2;
-      
+
       h = Math.max(2, Math.min(45, h));
-      
+
       d += `M ${x.toFixed(1)} ${50 - h} L ${x.toFixed(1)} ${50 + h} `;
     }
     return d;
@@ -133,32 +139,34 @@ export default function GhostwriterSection() {
       <div className="container px-4 md:px-6 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
 
         <div className="order-1 md:order-1 relative h-[300px] md:h-[500px] flex items-center justify-center">
-          <svg viewBox="0 0 200 100" className="w-full h-full text-primary overflow-visible">
-            <MotionPath
-              d={waveforms.secondary}
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="3"
-              strokeLinecap="round"
-              initial={{ pathLength: 0, opacity: 0 }}
-              whileInView={{ pathLength: 1, opacity: 0.2 }}
-              style={{ pathLength: waveProgress, opacity: waveProgress }}
-              className="opacity-20 blur-[1px]"
-              transition={{ duration: 1.5, ease: "easeInOut" }}
-            />
-            <MotionPath
-              d={animatedMainPath}
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              initial={{ pathLength: 0, opacity: 0 }}
-              whileInView={{ pathLength: 1, opacity: 1 }}
-              style={{ pathLength: waveProgress, opacity: waveProgress }}
-              className="opacity-90"
-              transition={{ duration: 1.5, ease: "easeInOut" }}
-            />
-          </svg>
+          {mounted && (
+            <svg viewBox="0 0 200 100" className="w-full h-full text-primary overflow-visible">
+              <MotionPath
+                d={waveforms.secondary}
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="3"
+                strokeLinecap="round"
+                initial={{ pathLength: 0, opacity: 0 }}
+                whileInView={{ pathLength: 1, opacity: 0.2 }}
+                style={{ pathLength: waveProgress, opacity: waveProgress }}
+                className="opacity-20 blur-[1px]"
+                transition={{ duration: 1.5, ease: "easeInOut" }}
+              />
+              <MotionPath
+                d={animatedMainPath}
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                initial={{ pathLength: 0, opacity: 0 }}
+                whileInView={{ pathLength: 1, opacity: 1 }}
+                style={{ pathLength: waveProgress, opacity: waveProgress }}
+                className="opacity-90"
+                transition={{ duration: 1.5, ease: "easeInOut" }}
+              />
+            </svg>
+          )}
           <div className="absolute inset-0 bg-gradient-to-r from-background via-transparent to-background" />
         </div>
 
