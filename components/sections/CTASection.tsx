@@ -33,7 +33,7 @@ export default function CTASection() {
   async function onSubmit(data: WaitlistFormData) {
     setIsSubmitting(true)
     try {
-      const response = await fetch("/api/waitlist", {
+      const response = await fetch("/send-email.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
