@@ -37,7 +37,7 @@ export default function HeroSection() {
         <DataGlobe />
       </MotionDiv>
 
-      <div className="container relative z-10 px-4 md:px-6 pointer-events-none">
+      <div className="w-full max-w-7xl mx-auto px-4 md:px-6 relative z-10 pointer-events-none">
         <MotionDiv
           style={{ y: titleY, opacity: titleOpacity }}
           className="max-w-4xl mx-auto text-center pointer-events-auto"

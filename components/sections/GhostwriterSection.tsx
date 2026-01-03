@@ -136,7 +136,7 @@ export default function GhostwriterSection() {
 
   return (
     <section ref={containerRef} className="relative min-h-screen flex items-center bg-background py-20 overflow-hidden">
-      <div className="container px-4 md:px-6 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+      <div className="w-full max-w-7xl mx-auto px-4 md:px-6 grid grid-cols-1 md:grid-cols-2 gap-12 items-center justify-center w-full">
 
         <div className="order-1 md:order-1 relative h-[300px] md:h-[500px] flex items-center justify-center">
           {mounted && (
@@ -178,10 +178,12 @@ export default function GhostwriterSection() {
             viewport={{ once: true }}
           >
             <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-4 text-white">
-              Écoutez, l'IA s'occupe du reste
+              Écoutez, <br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400">
+                l'IA s'occupe du reste</span>
             </h2>
             <p className="text-lg text-slate-400">
-              0 minute de saisie post-RDV. Le Ghostwriter écoute, structure et remplit le dossier client en temps réel
+              Aucune saisie post-RDV. Le Ghostwriter écoute, structure et remplit le dossier client en temps réel
             </p>
           </MotionDiv>
 

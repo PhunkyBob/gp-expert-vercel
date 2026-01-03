@@ -39,8 +39,8 @@ export default function DocumentsSection() {
             <div className="absolute top-1/4 -left-20 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl pointer-events-none" />
             <div className="absolute bottom-1/4 -right-20 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl pointer-events-none" />
 
-            <div className="container px-4 md:px-6">
-                <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <div className="w-full max-w-7xl mx-auto px-4 md:px-6">
+                <div className="grid lg:grid-cols-2 gap-12 items-center justify-center w-full">
                     
                     <div className="max-w-2xl">
                         <MotionDiv

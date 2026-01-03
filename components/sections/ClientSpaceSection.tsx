@@ -59,14 +59,14 @@ export default function ClientSpaceSection() {
 
   return (
     <section ref={containerRef} className="relative min-h-screen flex items-center bg-background py-20 overflow-hidden">
-      <div className="container px-4 md:px-6">
+      <div className="w-full max-w-7xl mx-auto px-4 md:px-6">
         <MotionDiv
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           className="max-w-3xl mx-auto text-center mb-16"
         >
-          <h2 className="text-3xl md:text-5xl font-bold mb-6">Espace client collaboratif</h2>
+          <h2 className="text-3xl md:text-5xl font-bold mb-6">Espace client <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400">collaboratif</span></h2>
           <p className="text-xl text-slate-400">Coffre-fort numérique partagé et workflow intelligent</p>
         </MotionDiv>
 

@@ -2,9 +2,11 @@
 
 import { useRef } from "react"
 import { motion, useScroll, useTransform } from "framer-motion"
+import { TrendingUp, Calendar, PiggyBank, ShieldCheck } from "lucide-react"
 
 const MotionDiv = motion.div as any
 const MotionPath = motion.path as any
+const MotionRect = motion.rect as any
 
 interface SankeyNode {
   x: number
@@ -125,102 +127,140 @@ export default function RetirementSection() {
 
   return (
     <section ref={containerRef} className="relative min-h-screen flex items-center bg-background py-20 overflow-hidden">
-      <div className="container px-4 md:px-6">
-        <MotionDiv
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="max-w-3xl mx-auto text-center mb-16"
-        >
-          <h2 className="text-3xl md:text-5xl font-bold mb-6">Projection des revenus</h2>
-          <p className="text-xl text-slate-400 mb-8">Analyse des flux futurs de revenus basés sur les droits acquis, les investissements et les évènements de la vie</p>
-        </MotionDiv>
+      <div className="w-full max-w-7xl mx-auto px-4 md:px-6">
+        <div className="grid lg:grid-cols-2 gap-12 items-center justify-center w-full">
 
-        <div className="max-w-5xl mx-auto">
-          <svg viewBox="0 0 100 100" className="w-full h-[500px] md:h-[600px]" preserveAspectRatio="xMidYMid meet">
-            <defs>
-              <linearGradient id="flowGradient" x1="0" x2="1" y1="0" y2="0">
-                <stop offset="0%" stopColor="#3b82f6" stopOpacity="0.8" />
-                <stop offset="50%" stopColor="#8b5cf6" stopOpacity="0.6" />
-                <stop offset="100%" stopColor="#ec4899" stopOpacity="0.8" />
-              </linearGradient>
-              <filter id="glow">
-                <feGaussianBlur stdDeviation="0.5" result="coloredBlur" />
-                <feMerge>
-                  <feMergeNode in="coloredBlur" />
-                  <feMergeNode in="SourceGraphic" />
-                </feMerge>
-              </filter>
-            </defs>
+          <div className="max-w-2xl flex flex-col justify-center">
+            <MotionDiv
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+            >
+              <div className="flex items-center gap-2 mb-6">
+                <div className="p-2 rounded-lg bg-blue-500/10 border border-blue-500/20">
+                  <TrendingUp className="w-5 h-5 text-blue-400" />
+                </div>
+                <span className="text-blue-400 font-medium tracking-wide text-sm uppercase">Projection Revenus</span>
+              </div>
 
-            {links.map((link, i) => (
-              <MotionPath
-                key={i}
-                d={createPath(link)}
-                fill="none"
-                stroke={link.color}
-                strokeWidth="0.8"
-                strokeOpacity={link.opacity}
-                filter="url(#glow)"
-                initial={{ pathLength: 0, opacity: 0 }}
-                style={{ pathLength: flowProgress, opacity: flowProgress }}
-                transition={{ duration: 1.5, delay: i * 0.1 }}
-              />
-            ))}
+              <h2 className="text-3xl md:text-5xl font-bold mb-6 leading-tight">
+                Analyse des flux<br />
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400">
+                  futurs
+                </span>
+              </h2>
 
-            {sourceNodes.map((node, i) => (
-              <MotionRect
-                key={`source-${i}`}
-                x={node.x}
-                y={node.y}
-                width={node.width}
-                height={node.height}
-                rx="0.5"
-                fill={node.color}
-                filter="url(#glow)"
-                initial={{ opacity: 0, x: node.x - 10 }}
-                whileInView={{ opacity: 1, x: node.x }}
-                transition={{ duration: 0.8, delay: 0.5 + i * 0.1 }}
-              />
-            ))}
+              <p className="text-xl text-slate-400 mb-8 leading-relaxed">
+                Analyse des flux futurs de revenus basés sur les droits acquis, les investissements et les évènements de la vie.
+              </p>
 
-            {middleNodes.map((node, i) => (
-              <MotionRect
-                key={`middle-${i}`}
-                x={node.x}
-                y={node.y}
-                width={node.width}
-                height={node.height}
-                rx="0.5"
-                fill={node.color}
-                filter="url(#glow)"
-                initial={{ opacity: 0, scale: 0 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.8, delay: 1 + i * 0.1 }}
-                style={{ transformOrigin: `${node.x + node.width / 2}% ${node.y + node.height / 2}%` }}
-              />
-            ))}
+              <div className="space-y-4">
+                {[
+                  { icon: Calendar, text: "Projection sur le long terme" },
+                  { icon: PiggyBank, text: "Visualisation des revenus acquis" },
+                  { icon: ShieldCheck, text: "Scénarios de vie intégrés" }
+                ].map((item, i) => (
+                  <div key={i} className="flex items-center gap-3 text-slate-300">
+                    <item.icon className="w-5 h-5 text-purple-400" />
+                    <span>{item.text}</span>
+                  </div>
+                ))}
+              </div>
 
-            {destNodes.map((node, i) => (
-              <MotionRect
-                key={`dest-${i}`}
-                x={node.x}
-                y={node.y}
-                width={node.width}
-                height={node.height}
-                rx="0.5"
-                fill={node.color}
-                filter="url(#glow)"
-                initial={{ opacity: 0, x: node.x + 10 }}
-                whileInView={{ opacity: 1, x: node.x }}
-                transition={{ duration: 0.8, delay: 1.5 + i * 0.1 }}
-              />
-            ))}
-          </svg>
+              <div className="mt-10 flex flex-wrap gap-3">
+                {['Retraite', 'Revenus', 'Investissements', 'Droits'].map((tag, i) => (
+                  <span key={i} className="px-3 py-1 bg-white/5 border border-white/10 rounded-full text-xs text-slate-400">
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            </MotionDiv>
+          </div>
+
+          <div className="relative h-[550px] flex items-center justify-center flex-col justify-center">
+            <svg viewBox="0 0 100 100" className="w-full h-[500px] md:h-[600px]" preserveAspectRatio="xMidYMid meet">
+              <defs>
+                <linearGradient id="flowGradient" x1="0" x2="1" y1="0" y2="0">
+                  <stop offset="0%" stopColor="#3b82f6" stopOpacity="0.8" />
+                  <stop offset="50%" stopColor="#8b5cf6" stopOpacity="0.6" />
+                  <stop offset="100%" stopColor="#ec4899" stopOpacity="0.8" />
+                </linearGradient>
+                <filter id="glow">
+                  <feGaussianBlur stdDeviation="0.5" result="coloredBlur" />
+                  <feMerge>
+                    <feMergeNode in="coloredBlur" />
+                    <feMergeNode in="SourceGraphic" />
+                  </feMerge>
+                </filter>
+              </defs>
+
+              {links.map((link, i) => (
+                <MotionPath
+                  key={i}
+                  d={createPath(link)}
+                  fill="none"
+                  stroke={link.color}
+                  strokeWidth="0.8"
+                  strokeOpacity={link.opacity}
+                  filter="url(#glow)"
+                  initial={{ pathLength: 0, opacity: 0 }}
+                  style={{ pathLength: flowProgress, opacity: flowProgress }}
+                  transition={{ duration: 1.5, delay: i * 0.1 }}
+                />
+              ))}
+
+              {sourceNodes.map((node, i) => (
+                <MotionRect
+                  key={`source-${i}`}
+                  x={node.x}
+                  y={node.y}
+                  width={node.width}
+                  height={node.height}
+                  rx="0.5"
+                  fill={node.color}
+                  filter="url(#glow)"
+                  initial={{ opacity: 0, x: node.x - 10 }}
+                  whileInView={{ opacity: 1, x: node.x }}
+                  transition={{ duration: 0.8, delay: 0.5 + i * 0.1 }}
+                />
+              ))}
+
+              {middleNodes.map((node, i) => (
+                <MotionRect
+                  key={`middle-${i}`}
+                  x={node.x}
+                  y={node.y}
+                  width={node.width}
+                  height={node.height}
+                  rx="0.5"
+                  fill={node.color}
+                  filter="url(#glow)"
+                  initial={{ opacity: 0, scale: 0 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.8, delay: 1 + i * 0.1 }}
+                  style={{ transformOrigin: `${node.x + node.width / 2}% ${node.y + node.height / 2}%` }}
+                />
+              ))}
+
+              {destNodes.map((node, i) => (
+                <MotionRect
+                  key={`dest-${i}`}
+                  x={node.x}
+                  y={node.y}
+                  width={node.width}
+                  height={node.height}
+                  rx="0.5"
+                  fill={node.color}
+                  filter="url(#glow)"
+                  initial={{ opacity: 0, x: node.x + 10 }}
+                  whileInView={{ opacity: 1, x: node.x }}
+                  transition={{ duration: 0.8, delay: 1.5 + i * 0.1 }}
+                />
+              ))}
+            </svg>
+          </div>
         </div>
       </div>
     </section>
   )
 }
-
-const MotionRect = motion.rect as any

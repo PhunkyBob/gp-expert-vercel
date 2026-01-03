@@ -35,19 +35,57 @@ export default function VaultSection() {
 
     return (
         <section ref={containerRef} className="relative min-h-screen flex items-center bg-background py-20 overflow-hidden">
-            <div className="container px-4 md:px-6">
-                <div className="max-w-3xl mx-auto text-center mb-20">
-                    <MotionDiv
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.8 }}
-                    >
-                        <h2 className="text-3xl md:text-5xl font-bold mb-6">Votre vue panoramique, sans effort</h2>
-                        <p className="text-xl text-slate-400">Agrégation 360° en temps réel. Banques, immobilier, private equity, crypto</p>
-                    </MotionDiv>
-                </div>
+            <div className="w-full max-w-7xl mx-auto px-4 md:px-6">
+                <div className="grid lg:grid-cols-2 gap-12 items-center justify-center w-full">
 
-                <div className="relative h-[400px] md:h-[500px] flex items-center justify-center">
+                    <div className="max-w-2xl flex flex-col justify-center">
+                        <MotionDiv
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.8 }}
+                        >
+                            <div className="flex items-center gap-2 mb-6">
+                                <div className="p-2 rounded-lg bg-blue-500/10 border border-blue-500/20">
+                                    <PieChart className="w-5 h-5 text-blue-400" />
+                                </div>
+                                <span className="text-blue-400 font-medium tracking-wide text-sm uppercase">Agrégation 360°</span>
+                            </div>
+
+                            <h2 className="text-3xl md:text-5xl font-bold mb-6 leading-tight">
+                                Votre vue panoramique,<br />
+                                <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400">
+                                    sans effort
+                                </span>
+                            </h2>
+
+                            <p className="text-xl text-slate-400 mb-8 leading-relaxed">
+                                Agrégation en temps réel de tous vos actifs. Banques, immobilier, private equity, crypto — une vue unifiée de votre patrimoine.
+                            </p>
+
+                            <div className="space-y-4">
+                                {[
+                                    { icon: Coins, text: "Synchronisation automatique multi-comptes" },
+                                    { icon: PieChart, text: "Visualisation en temps réel" },
+                                    { icon: Wallet, text: "Reconnaissance intelligente des actifs" }
+                                ].map((item, i) => (
+                                    <div key={i} className="flex items-center gap-3 text-slate-300">
+                                        <item.icon className="w-5 h-5 text-purple-400" />
+                                        <span>{item.text}</span>
+                                    </div>
+                                ))}
+                            </div>
+
+                            <div className="mt-10 flex flex-wrap gap-3">
+                                {['Banques', 'Immobilier', 'Private Equity', 'Crypto'].map((tag, i) => (
+                                    <span key={i} className="px-3 py-1 bg-white/5 border border-white/10 rounded-full text-xs text-slate-400">
+                                        {tag}
+                                    </span>
+                                ))}
+                            </div>
+                        </MotionDiv>
+                    </div>
+
+                    <div className="relative h-[500px] flex items-center justify-center flex-col justify-center">
                     <MotionDiv
                         style={{ opacity: gridOpacity, scale: gridScale, rotate: gridRotate }}
                         className="absolute grid grid-cols-3 gap-4"
@@ -145,6 +183,7 @@ export default function VaultSection() {
                             </MotionDiv>
                         </div>
                     </MotionDiv>
+                </div>
                 </div>
             </div>
         </section>

@@ -49,9 +49,9 @@ export default function AssistantSection() {
                 </div>
             </MotionDiv>
 
-            <div className="container px-4 md:px-6 relative z-10">
+            <div className="w-full max-w-7xl mx-auto px-4 md:px-6 relative z-10">
                 <div className="max-w-3xl mx-auto text-center mb-12">
-                    <h2 className="text-3xl md:text-5xl font-bold mb-6">Votre expert juridique interne, disponible 24/7</h2>
+                    <h2 className="text-3xl md:text-5xl font-bold mb-6">Votre expert juridique interne<br /><span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400">disponible 24/7</span></h2>
                     <p className="text-xl text-slate-400 mb-8">Certitude juridique absolue. RAG sur 50,000+ textes de loi et jurisprudence</p>
                     <div className="flex flex-wrap justify-center gap-4 mb-6">
                         <div className="flex items-center gap-2 px-4 py-2 bg-blue-500/10 border border-blue-500/30 rounded-full text-blue-400 text-sm">

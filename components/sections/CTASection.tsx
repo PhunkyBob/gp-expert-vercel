@@ -51,7 +51,7 @@ export default function CTASection() {
 
   return (
     <section id="cta" className="relative min-h-screen flex items-center bg-background py-20">
-      <div className="container px-4 md:px-6">
+      <div className="w-full max-w-7xl mx-auto px-4 md:px-6">
         <div className="max-w-2xl mx-auto flex flex-col items-center">
           <div className="flex flex-col items-center justify-center mb-12 space-y-4">
             <MotionDiv

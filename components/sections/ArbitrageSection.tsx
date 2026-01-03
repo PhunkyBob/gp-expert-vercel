@@ -2,6 +2,7 @@
 
 import { useRef, useState, useEffect } from "react"
 import { motion, useScroll, useTransform } from "framer-motion"
+import { LineChart, TrendingUp, PiggyBank, BarChart3 } from "lucide-react"
 
 const MotionDiv = motion.div as any
 const MotionPath = motion.path as any
@@ -92,200 +93,240 @@ export default function ArbitrageSection() {
 
   return (
     <section ref={containerRef} className="relative min-h-screen flex items-center bg-background py-20 overflow-hidden">
-      <div className="container px-4 md:px-6">
-        <MotionDiv
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="max-w-3xl mx-auto text-center mb-16"
-        >
-          <h2 className="text-3xl md:text-5xl font-bold mb-6">Simulateur d'arbitrage</h2>
-          <p className="text-xl text-slate-400 mb-8">Comparaison avant/après sur une stratégie d'investissement</p>
-        </MotionDiv>
+      <div className="w-full max-w-7xl mx-auto px-4 md:px-6">
+        <div className="grid lg:grid-cols-2 gap-12 items-center justify-center w-full">
 
-        <div className="max-w-5xl mx-auto">
-          <div className="relative">
-            {mounted && (
-              <svg viewBox={`0 0 ${width} ${height}`} className="w-full h-[500px] md:h-[600px]" preserveAspectRatio="xMidYMid meet">
-                <defs>
-                  <linearGradient id="gradientArea" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="#22c55e" stopOpacity="0.4" />
-                    <stop offset="100%" stopColor="#22c55e" stopOpacity="0.05" />
-                  </linearGradient>
-                  <linearGradient id="beforeAreaGradient" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="#64748b" stopOpacity="0.2" />
-                    <stop offset="100%" stopColor="#64748b" stopOpacity="0.05" />
-                  </linearGradient>
-                  <linearGradient id="afterAreaGradient" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="#3b82f6" stopOpacity="0.2" />
-                    <stop offset="100%" stopColor="#3b82f6" stopOpacity="0.05" />
-                  </linearGradient>
-                  <filter id="glow">
-                    <feGaussianBlur stdDeviation="0.4" result="coloredBlur" />
-                    <feMerge>
-                      <feMergeNode in="coloredBlur" />
-                      <feMergeNode in="SourceGraphic" />
-                    </feMerge>
-                  </filter>
-                </defs>
+          <div className="max-w-2xl flex flex-col justify-center">
+            <MotionDiv
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+            >
+              <div className="flex items-center gap-2 mb-6">
+                <div className="p-2 rounded-lg bg-blue-500/10 border border-blue-500/20">
+                  <LineChart className="w-5 h-5 text-blue-400" />
+                </div>
+                <span className="text-blue-400 font-medium tracking-wide text-sm uppercase">Arbitrage Intelligent</span>
+              </div>
 
-                {data.map((_, i) => (
+              <h2 className="text-3xl md:text-5xl font-bold mb-6 leading-tight">
+                Simulateur<br />
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400">
+                  d'arbitrage
+                </span>
+              </h2>
+
+              <p className="text-xl text-slate-400 mb-8 leading-relaxed">
+                Comparaison avant/après sur vos stratégies d'investissement. Visualisez l'impact de chaque décision en temps réel.
+              </p>
+
+              <div className="space-y-4">
+                {[
+                  { icon: TrendingUp, text: "Projection sur plusieurs années" },
+                  { icon: BarChart3, text: "Comparaison de scénarios" },
+                  { icon: PiggyBank, text: "Calcul du gain potentiel" }
+                ].map((item, i) => (
+                  <div key={i} className="flex items-center gap-3 text-slate-300">
+                    <item.icon className="w-5 h-5 text-purple-400" />
+                    <span>{item.text}</span>
+                  </div>
+                ))}
+              </div>
+
+              <div className="mt-10 flex flex-wrap gap-3">
+                {['Actions', 'Obligations', 'Immobilier', 'Crypto'].map((tag, i) => (
+                  <span key={i} className="px-3 py-1 bg-white/5 border border-white/10 rounded-full text-xs text-slate-400">
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            </MotionDiv>
+          </div>
+
+          <div className="relative h-[550px] flex items-center justify-center flex-col justify-center">
+            <div className="relative w-full">
+              {mounted && (
+                <svg viewBox={`0 0 ${width} ${height}`} className="w-full h-[500px] md:h-[600px]" preserveAspectRatio="xMidYMid meet">
+                  <defs>
+                    <linearGradient id="gradientArea" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stopColor="#22c55e" stopOpacity="0.4" />
+                      <stop offset="100%" stopColor="#22c55e" stopOpacity="0.05" />
+                    </linearGradient>
+                    <linearGradient id="beforeAreaGradient" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stopColor="#64748b" stopOpacity="0.2" />
+                      <stop offset="100%" stopColor="#64748b" stopOpacity="0.05" />
+                    </linearGradient>
+                    <linearGradient id="afterAreaGradient" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stopColor="#3b82f6" stopOpacity="0.2" />
+                      <stop offset="100%" stopColor="#3b82f6" stopOpacity="0.05" />
+                    </linearGradient>
+                    <filter id="glow">
+                      <feGaussianBlur stdDeviation="0.4" result="coloredBlur" />
+                      <feMerge>
+                        <feMergeNode in="coloredBlur" />
+                        <feMergeNode in="SourceGraphic" />
+                      </feMerge>
+                    </filter>
+                  </defs>
+
+                  {data.map((_, i) => (
+                    <line
+                      key={i}
+                      x1={xScale(i)}
+                      y1={padding.top}
+                      x2={xScale(i)}
+                      y2={padding.top + chartHeight}
+                      stroke="rgba(255,255,255,0.05)"
+                      strokeWidth="0.1"
+                      strokeDasharray="0.5 0.5"
+                    />
+                  ))}
+
                   <line
-                    key={i}
-                    x1={xScale(i)}
-                    y1={padding.top}
-                    x2={xScale(i)}
+                    x1={padding.left}
+                    y1={padding.top + chartHeight}
+                    x2={width - padding.right}
                     y2={padding.top + chartHeight}
-                    stroke="rgba(255,255,255,0.05)"
-                    strokeWidth="0.1"
-                    strokeDasharray="0.5 0.5"
+                    stroke="rgba(255,255,255,0.1)"
+                    strokeWidth="0.15"
                   />
-                ))}
 
-                <line
-                  x1={padding.left}
-                  y1={padding.top + chartHeight}
-                  x2={width - padding.right}
-                  y2={padding.top + chartHeight}
-                  stroke="rgba(255,255,255,0.1)"
-                  strokeWidth="0.15"
-                />
+                  {data.map((d, i) => (
+                    <text
+                      key={i}
+                      x={xScale(i)}
+                      y={height - 5}
+                      textAnchor="middle"
+                      fontSize="3"
+                      fill="rgba(255,255,255,0.4)"
+                      fontWeight="400"
+                    >
+                      {d.year}
+                    </text>
+                  ))}
 
-                {data.map((d, i) => (
-                  <text
-                    key={i}
-                    x={xScale(i)}
-                    y={height - 5}
-                    textAnchor="middle"
-                    fontSize="3"
-                    fill="rgba(255,255,255,0.4)"
-                    fontWeight="400"
-                  >
-                    {d.year}
-                  </text>
-                ))}
+                  <MotionPath
+                    d={gradientAreaPath}
+                    fill="url(#gradientArea)"
+                    initial={{ opacity: 0 }}
+                    whileInView={{ opacity: 1 }}
+                    transition={{ duration: 1, delay: 0.5 }}
+                  />
 
-                <MotionPath
-                  d={gradientAreaPath}
-                  fill="url(#gradientArea)"
-                  initial={{ opacity: 0 }}
-                  whileInView={{ opacity: 1 }}
-                  transition={{ duration: 1, delay: 0.5 }}
-                />
+                  <MotionPath
+                    d={beforeAreaPath}
+                    fill="url(#beforeAreaGradient)"
+                    initial={{ opacity: 0 }}
+                    whileInView={{ opacity: 1 }}
+                    transition={{ duration: 1 }}
+                  />
 
-                <MotionPath
-                  d={beforeAreaPath}
-                  fill="url(#beforeAreaGradient)"
-                  initial={{ opacity: 0 }}
-                  whileInView={{ opacity: 1 }}
-                  transition={{ duration: 1 }}
-                />
+                  <MotionPath
+                    d={afterAreaPath}
+                    fill="url(#afterAreaGradient)"
+                    initial={{ opacity: 0 }}
+                    whileInView={{ opacity: 1 }}
+                    transition={{ duration: 1, delay: 0.2 }}
+                  />
 
-                <MotionPath
-                  d={afterAreaPath}
-                  fill="url(#afterAreaGradient)"
-                  initial={{ opacity: 0 }}
-                  whileInView={{ opacity: 1 }}
-                  transition={{ duration: 1, delay: 0.2 }}
-                />
+                  <MotionPath
+                    d={beforePath}
+                    fill="none"
+                    stroke="#64748b"
+                    strokeWidth="0.8"
+                    strokeOpacity="0.7"
+                    filter="url(#glow)"
+                    initial={{ pathLength: 0, opacity: 0 }}
+                    whileInView={{ pathLength: 1, opacity: 1 }}
+                    transition={{ duration: 1.5, ease: "easeInOut" }}
+                  />
 
-                <MotionPath
-                  d={beforePath}
-                  fill="none"
-                  stroke="#64748b"
-                  strokeWidth="0.8"
-                  strokeOpacity="0.7"
-                  filter="url(#glow)"
-                  initial={{ pathLength: 0, opacity: 0 }}
-                  whileInView={{ pathLength: 1, opacity: 1 }}
-                  transition={{ duration: 1.5, ease: "easeInOut" }}
-                />
+                  <MotionPath
+                    d={afterPath}
+                    fill="none"
+                    stroke="#3b82f6"
+                    strokeWidth="1"
+                    filter="url(#glow)"
+                    initial={{ pathLength: 0, opacity: 0 }}
+                    whileInView={{ pathLength: 1, opacity: 1 }}
+                    transition={{ duration: 1.5, delay: 0.3, ease: "easeInOut" }}
+                  />
 
-                <MotionPath
-                  d={afterPath}
-                  fill="none"
-                  stroke="#3b82f6"
-                  strokeWidth="1"
-                  filter="url(#glow)"
-                  initial={{ pathLength: 0, opacity: 0 }}
-                  whileInView={{ pathLength: 1, opacity: 1 }}
-                  transition={{ duration: 1.5, delay: 0.3, ease: "easeInOut" }}
-                />
+                  {data.map((d, i) => (
+                    <MotionDiv
+                      key={`dot-${i}`}
+                      initial={{ opacity: 0, scale: 0 }}
+                      whileInView={{ opacity: 1, scale: 1 }}
+                      transition={{ duration: 0.4, delay: 0.8 + i * 0.1 }}
+                    >
+                      <circle
+                        cx={xScale(i)}
+                        cy={yScale(d.before)}
+                        r="1.5"
+                        fill="#64748b"
+                        opacity="0.8"
+                      />
+                    </MotionDiv>
+                  ))}
 
-                {data.map((d, i) => (
+                  {data.map((d, i) => (
+                    <MotionDiv
+                      key={`dot-after-${i}`}
+                      initial={{ opacity: 0, scale: 0 }}
+                      whileInView={{ opacity: 1, scale: 1 }}
+                      transition={{ duration: 0.4, delay: 1 + i * 0.1 }}
+                    >
+                      <circle
+                        cx={xScale(i)}
+                        cy={yScale(d.after)}
+                        r="1.8"
+                        fill="#3b82f6"
+                        filter="url(#glow)"
+                      />
+                    </MotionDiv>
+                  ))}
+
                   <MotionDiv
-                    key={`dot-${i}`}
-                    initial={{ opacity: 0, scale: 0 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.4, delay: 0.8 + i * 0.1 }}
+                    initial={{ opacity: 0, x: xScale(data.length - 1), y: yScale(maxAfterValue) - 8 }}
+                    whileInView={{ opacity: 1 }}
+                    transition={{ duration: 0.6, delay: 1.8 }}
                   >
                     <circle
-                      cx={xScale(i)}
-                      cy={yScale(d.before)}
-                      r="1.5"
-                      fill="#64748b"
-                      opacity="0.8"
+                      cx={xScale(data.length - 1)}
+                      cy={yScale(maxAfterValue)}
+                      r="0.5"
+                      fill="#ffffff"
                     />
                   </MotionDiv>
-                ))}
+                </svg>
+              )}
 
-                {data.map((d, i) => (
-                  <MotionDiv
-                    key={`dot-after-${i}`}
-                    initial={{ opacity: 0, scale: 0 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.4, delay: 1 + i * 0.1 }}
-                  >
-                    <circle
-                      cx={xScale(i)}
-                      cy={yScale(d.after)}
-                      r="1.8"
-                      fill="#3b82f6"
-                      filter="url(#glow)"
-                    />
-                  </MotionDiv>
-                ))}
+              <MotionDiv
+                className="absolute top-8 right-8 md:right-12 bg-gradient-to-r from-green-500/20 to-blue-500/20 border border-green-500/30 rounded-lg px-4 py-3 backdrop-blur"
+                initial={{ opacity: 0, scale: 0.8 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.6, delay: 2 }}
+              >
+                <div className="text-xs text-slate-400 mb-1">Gain total</div>
+                <div className="text-2xl font-bold text-green-400">+{gainPercentage}%</div>
+              </MotionDiv>
 
-                <MotionDiv
-                  initial={{ opacity: 0, x: xScale(data.length - 1), y: yScale(maxAfterValue) - 8 }}
-                  whileInView={{ opacity: 1 }}
-                  transition={{ duration: 0.6, delay: 1.8 }}
-                >
-                  <circle
-                    cx={xScale(data.length - 1)}
-                    cy={yScale(maxAfterValue)}
-                    r="0.5"
-                    fill="#ffffff"
-                  />
-                </MotionDiv>
-              </svg>
-            )}
-
-            <MotionDiv
-              className="absolute top-8 right-8 md:right-12 bg-gradient-to-r from-green-500/20 to-blue-500/20 border border-green-500/30 rounded-lg px-4 py-3 backdrop-blur"
-              initial={{ opacity: 0, scale: 0.8 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.6, delay: 2 }}
-            >
-              <div className="text-xs text-slate-400 mb-1">Gain total</div>
-              <div className="text-2xl font-bold text-green-400">+{gainPercentage}%</div>
-            </MotionDiv>
-
-            <MotionDiv
-              className="absolute bottom-12 left-8 md:left-12 flex flex-col gap-3"
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, delay: 2.2 }}
-            >
-              <div className="flex items-center gap-3">
-                <div className="w-4 h-0.5 bg-slate-500 opacity-70" />
-                <span className="text-sm text-slate-400">Avant arbitrage</span>
-              </div>
-              <div className="flex items-center gap-3">
-                <div className="w-4 h-0.5 bg-blue-500" />
-                <span className="text-sm text-blue-400">Après arbitrage</span>
-              </div>
-            </MotionDiv>
+              <MotionDiv
+                className="absolute bottom-12 left-8 md:left-12 flex flex-col gap-3"
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.6, delay: 2.2 }}
+              >
+                <div className="flex items-center gap-3">
+                  <div className="w-4 h-0.5 bg-slate-500 opacity-70" />
+                  <span className="text-sm text-slate-400">Avant arbitrage</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <div className="w-4 h-0.5 bg-blue-500" />
+                  <span className="text-sm text-blue-400">Après arbitrage</span>
+                </div>
+              </MotionDiv>
+            </div>
           </div>
         </div>
       </div>
