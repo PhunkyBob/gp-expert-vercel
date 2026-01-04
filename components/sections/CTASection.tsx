@@ -27,6 +27,7 @@ export default function CTASection() {
       advisorsCount: "",
       clientsCount: "",
       painPoint: "",
+      honeypot: "",
     },
   })
 
@@ -208,6 +209,22 @@ export default function CTASection() {
                             />
                           </FormControl>
                           <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
+                    <FormField
+                      control={form.control}
+                      name="honeypot"
+                      render={({ field }) => (
+                        <FormItem className="hidden">
+                          <FormControl>
+                            <Input
+                              {...field}
+                              tabIndex={-1}
+                              autoComplete="off"
+                            />
+                          </FormControl>
                         </FormItem>
                       )}
                     />

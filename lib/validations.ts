@@ -15,6 +15,7 @@ export const waitlistSchema = z.object({
     message: "Requis",
   }),
   painPoint: z.string().optional(),
+  honeypot: z.string().optional(),
 })
 
 export type WaitlistFormData = z.infer<typeof waitlistSchema>

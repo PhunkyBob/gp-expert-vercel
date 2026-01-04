@@ -17,6 +17,51 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit();
 }
 
+// Rate limiting function
+function checkRateLimit($ip, $limit = 5, $period = 3600) {
+    $file = __DIR__ . '/rate_limit.json';
+    $data = [];
+
+    if (file_exists($file)) {
+        $content = file_get_contents($file);
+        $data = json_decode($content, true) ?: [];
+    }
+
+    $now = time();
+
+    // Clean old entries
+    $data = array_filter($data, function($entry) use ($now, $period) {
+        return ($now - $entry['timestamp']) < $period;
+    });
+
+    // Count recent submissions from this IP
+    $count = 0;
+    foreach ($data as $entry) {
+        if ($entry['ip'] === $ip) {
+            $count++;
+        }
+    }
+
+    if ($count >= $limit) {
+        return false;
+    }
+
+    // Add this submission
+    $data[] = ['ip' => $ip, 'timestamp' => $now];
+    file_put_contents($file, json_encode($data));
+
+    return true;
+}
+
+// Check rate limit
+$clientIP = $_SERVER['HTTP_CF_CONNECTING_IP'] ?? $_SERVER['HTTP_X_FORWARDED_FOR'] ?? $_SERVER['REMOTE_ADDR'];
+
+if (!checkRateLimit($clientIP, 3, 3600)) {
+    http_response_code(429);
+    echo json_encode(['success' => false, 'message' => 'Trop de tentatives. Réessayez plus tard.']);
+    exit();
+}
+
 // Load Composer autoloader
 require_once __DIR__ . '/vendor/autoload.php';
 
@@ -34,6 +79,13 @@ try {
 
     if (!$data) {
         throw new Exception('Données invalides');
+    }
+
+    // Honeypot check (spam bots fill hidden fields)
+    if (!empty($data['honeypot'])) {
+        http_response_code(200);
+        echo json_encode(['success' => true, 'message' => 'Inscription validée']);
+        exit();
     }
 
     // Validate required fields
